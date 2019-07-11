@@ -65,24 +65,27 @@
             .form .register-form{
                 display: none;
             }
+            p{
+                color:black;   
+            }
         </style>
     </head>
     <body>
         <div class="login-page">
-            <div class="form">
+            <div class="form board-form">
                 <form class="register-form">
                     <input type="text" id="rUser" placeholder="Username"/>
                     <input type="password" id="rPass" placeholder="Password"/>
                     <input type="password" id="rConfirm" placeholder="Confirm Password"/>
                     <input type="text" id="rEmail" placeholder="Email ID"/>
-                    <button id="createUser">Create</button>
+                    <button id="createUser" type="button">Create</button>
                     <p class="message">Already Registered? <a href="#">Login</a></p>
                 </form>
                 
                 <form class="login-form">
                     <input type="text" id="lUser" placeholder="Username"/>
                     <input type="password" id="lPass" placeholder="Password"/>
-                    <button>Login</button>
+                    <button id="loginUser" type="button">Login</button>
                     <p class="message">Not Registered? <a href="#">Register</a></p>
                 </form>
             </div>
@@ -93,13 +96,25 @@
             let rPass = document.getElementById("rPass").value
             let rConfirm = document.getElementById("rConfirm").value
             let createUser = document.getElementById("createUser")
+            let loginUser = document.getElementById("loginUser")
             
             createUser.onclick = function(){
                 test = document.getElementById("rPass").value
                 test2 = document.getElementById("rConfirm").value
                 if(rPass == rConfirm){
                     alert("Password confirmed!")
+                }
             }
+            loginUser.onclick = function(){
+                let lUser = document.getElementById("lUser").value
+                let lPass = document.getElementById("lPass").value
+                if(lUser == "admin" && lPass == "p@ssword"){
+                    alert("Login successful!")
+                    window.open('Dashboard.html')
+                }
+                else{
+                    alert("Error! Try again later!")
+                }
             }
             $('.message a').click(function(){
                 $('form').animate({height:"toggle", opacity:"toggle"}, "slow")
