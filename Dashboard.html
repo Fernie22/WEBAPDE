@@ -1,0 +1,161 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.1.1/Chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+
+    <title>Dashboard</title>
+    <style>
+        
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #333;
+        }
+        
+        li {
+          float: left;
+        }
+        
+        li a {
+          display: block;
+          color: white;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+        }
+        
+        li a:hover:not(.active) {
+          background-color: #111;
+        }
+        
+        .active {
+          background-color: #4CAF50;
+        }
+    </style>
+  </head>
+  
+  <body>
+        <ul>
+            <li><a class="active" href="#home">Dashboard</a></li>
+            <li><a href="Sales.html">Sales</a></li>
+            <li style="float:right"><a href="Login.html">Logout</a></li>
+        </ul>
+
+        <h1># OF CUSTOMERS PER HOUR</h1>
+        <canvas id="canvasCount" height="300" width="600"></canvas>
+        <h1>BURGER SALES</h1>
+        <canvas id="canvasGrub" height="300" width="600"></canvas>
+        <br/><br/>
+        <h1>SPECIES AND ORDERS</h1>
+        <canvas id="canvasSpecies" height="300" width="600"></canvas>
+        <br/><br/>
+        
+        <script>
+            $(document).ready(function(){
+                
+                //canvasCount
+                var dataCount = {
+                    labels: ["8am-9am", "9am-10am", "10am-11am", "11am-12pm", "12pm-1pm"],
+                    datasets: [
+                        {
+                            label: "No. of customers",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            data: [26, 26, 26, 22, 16]
+                        },
+                        {
+                             
+                        }
+                    ]
+                };
+
+                    var cvCount = $("#canvasCount").get(0).getContext("2d");
+
+                    var mychartCount = new Chart(cvCount).Line(dataCount, {
+                        bezierCurve: false
+                    });
+
+                //canvasGrub
+                var dataGrub = {
+                    labels: ["Krusty Kombo", "Krusty Deluxe", "Krabby Pattie"],
+                    datasets: [
+                        {
+                            label: "Burger Sales",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            data: [2304, 1522, 6174]
+                        },
+                        {
+                            
+                        }
+                    ]
+                };
+
+                    var cvGrub = $("#canvasGrub").get(0).getContext("2d");
+
+                    var mychartGrub = new Chart(cvGrub).Line(dataGrub, {
+                        bezierCurve: false
+                    });
+
+                    //dataSpecies
+                    var dataSpecies = {
+                    labels: ["Leatherback Turtle", "Salmon", "Seahorse", "Coral", "Giant Clam", "Gray Whale", "Sea Lion"],
+                    datasets: [
+                        {
+                            label: "Krusty Kombo",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            data: [736, 358, 263, 185, 248, 88, 426]
+                        },
+                        {
+                            label: "Krabby Pattie",
+                            fillColor: "rgba(151,187,205,0.2)",
+                            strokeColor: "rgba(151,187,205,1)",
+                            pointColor: "rgba(151,187,205,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(151,187,205,1)",
+                            data: [1961, 963, 672, 454, 719, 235, 1170]
+                        },
+                        {
+                            label: "Krusty Deluxe",
+                            fillColor: "rgba(151,187,205)",
+                            strokeColor: "rgba(151,187,205)",
+                            pointColor: "rgba(151,187,205)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(151,187,205)",
+                            data: [518, 198, 180, 117, 152, 53, 304]
+                        }
+                    ]
+                };
+
+                    var cvSpecies = $("#canvasSpecies").get(0).getContext("2d");
+
+                    var mychartSpecies = new Chart(cvSpecies).Bar(dataSpecies, {
+                        bezierCurve: false
+                    });
+                
+        })
+        </script>
+
+  </body>
+</html>
+

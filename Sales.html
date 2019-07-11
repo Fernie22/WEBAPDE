@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></script>
+
+    <title>Sales</title>
+
+    <style>
+            ul {
+              list-style-type: none;
+              margin: 0;
+              padding: 0;
+              overflow: hidden;
+              background-color: #333;
+            }
+            
+            li {
+              float: left;
+            }
+            
+            li a {
+              display: block;
+              color: white;
+              text-align: center;
+              padding: 14px 16px;
+              text-decoration: none;
+            }
+            
+            li a:hover:not(.active) {
+              background-color: #111;
+            }
+            
+            .active {
+              background-color: #4CAF50;
+            }
+            body {
+                text-align:center;
+            }
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse
+            }
+            .content-table{
+                width:70%; 
+                margin-left:15%; 
+                margin-right:15%;
+                border-collapse: collapse;
+                margin:25px 0;
+                font-size: 0.9em;
+                min-width:400px;
+                border-radius: 5px 5px 0 0;
+                overflow: hidden;
+                box-shadow:0 0 20px rgba(0,0,0,0.15);
+            }
+            .content-table thead tr{
+                background-color: #009879;
+                color:#FFFFFF;
+                text-align:left;
+                font-weight:bold;
+            }
+            .content-table th,
+            .content-table td{
+                padding:12px 15px;
+            }
+            .content-table tbody tr{
+                border-bottom: 1px solid #DDDDDD;
+            } 
+
+            .content-table tody tr:nth-of-type(even){
+                background-color:#F3F3F3;
+            }
+
+            .content-table tbody tr:last-of-type{
+                border-bottom:2px solid #009879;
+            }
+        </style>/
+</head>
+<body>
+    <ul>
+        <li><a href="Dashboard.html">Dashboard</a></li>
+        <li><a class="active" href="#news">Sales</a></li>
+        <li style="float:right"><a href="Login.html">Logout</a></li>
+    </ul>
+    <br>
+    <div class="container" style="margin-top:35px">
+        <h4>Select Number of Rows</h4>
+        <div class="form -group">
+            <select name="state" id="maxRows" class="form-control" style="width:150px;">
+                <option value="10000">Show All</option>
+                <option value="10">10</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+        <table id="mytable" class="content-table">
+            <thead>
+                <tr>
+                  <th>Sales #</th>
+                  <th>Date and Time</th>
+                  <th>Burger</th>
+                  <th>Species</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="pagination-container">
+            <nav>
+                <ul class="pagination"></ul>
+            </nav>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function(){
+            
+            $.ajax({
+                url:"krustykrab_array.json",
+                dataType:"json",
+                type:"get",
+                cache:"false",
+                success:function(krustykrabarray){
+                    $(krustykrabarray.sales).each(function(index, value){
+                        var record = "<tbody><tr><td><a href='SalesDetails.html'>"+(index+1)+
+                        "</a></td><td>"+value.datetime+"</td><td>"+
+                        value.burger+"</td><td>"+value.species+"</td></tr></tbody>";
+                        $("table").append(record);
+                    });
+                }
+            });
+
+            var table ="#mytable"
+            $("#maxRows").on("change", function(){
+                $(".pagination").html('')
+                var trnum = 0
+                var maxRows = parseInt($(this).val())
+                var totalRows = $(table+'tbody tr').length
+                $(table+' tr:gt(0)').each(function(){
+                    trnum++
+                    if(trnum > maxRows){
+                        $(this).hide()
+                    }
+                    if(trnum <= maxRows){
+                        $(this).show()
+                    }
+                })
+                if(totalRows > maxRows){
+                    var pagenum=Math.ceil(totalRows/maxRows)
+                    for(var i=1;i<=pagenum;){
+                        $(".pagination").append("<li data-page="+i+'">\<span>'+ i++ +'<span class="sr-only">(current)</span></span>\</li>').show()
+                    }
+                }
+                $(".pagination li:first-child").addClass("active")
+                $(".pagination li").on("click",function(){
+                    var pageNum = $(this).attr('data-page')
+                    var trIndex = 0;
+                    $(".pagination li").removeClass("active")
+                    $(this).addClass("active")
+                    $(table+"tr:gt(0)").each(function(){
+                        trIndex++
+                        if(trIndex>(maxRows*pageNum) || trIndex <=((maxRows*pageNum)-maxRows)){
+                            $(this).hide()
+                        }
+                        else{
+                            $(this).show()
+                        }
+                    })
+                })
+            })
+        });
+    </script>
+
+</body>
+</html>
