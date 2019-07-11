@@ -48,6 +48,8 @@
 
         <h1># OF CUSTOMERS PER HOUR</h1>
         <canvas id="canvasCount" height="300" width="600"></canvas>
+        <h1># OF CUSTOMERS PER DAY</h1>
+        <canvas id="canvasCountDay" height="300" width="600"></canvas>
         <h1>BURGER SALES</h1>
         <canvas id="canvasGrub" height="300" width="600"></canvas>
         <br/><br/>
@@ -64,12 +66,12 @@
                     datasets: [
                         {
                             label: "No. of customers",
-                            fillColor: "rgba(220,220,220,0.2)",
-                            strokeColor: "rgba(220,220,220,1)",
-                            pointColor: "rgba(220,220,220,1)",
-                            pointStrokeColor: "#fff",
-                            pointHighlightFill: "#fff",
-                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            fillColor: "rgba(255,253,133,1)",
+                            strokeColor: "rgba(255,126,5,1)",
+                            pointColor: "rgba(255,126,5,1",
+                            pointStrokeColor: "orange",
+                            pointHighlightFill: "orange",
+                            pointHighlightStroke: "rgba(255,126,5,1)",
                             data: [26, 26, 26, 22, 16]
                         },
                         {
@@ -84,18 +86,43 @@
                         bezierCurve: false
                     });
 
+                //canvasCount2
+                var dataCountDay = {
+                    labels: ["2019-05-27", "2019-05-28", "2019-05-29", "2019-05-30", "2019-05-31"],
+                    datasets: [
+                        {
+                            label: "No. of customers",
+                            fillColor: "rgba(255, 158, 242, 1)",
+                            strokeColor: "rgba(92, 0, 80, 1)",
+                            pointColor: "rgba(92, 0, 80, 1)",
+                            pointStrokeColor: "violet",
+                            pointHighlightFill: "violet",
+                            pointHighlightStroke: "rgba(92, 0, 80, 1)",
+                            data: [311, 304, 317, 310, 304]
+                        },
+                        {
+                             
+                        }
+                    ]
+                };
+
+                    var cvCountDay = $("#canvasCountDay").get(0).getContext("2d");
+
+                    var mychartCountDay = new Chart(cvCountDay).Line(dataCountDay, {
+                    });
+
                 //canvasGrub
                 var dataGrub = {
                     labels: ["Krusty Kombo", "Krusty Deluxe", "Krabby Pattie"],
                     datasets: [
                         {
                             label: "Burger Sales",
-                            fillColor: "rgba(220,220,220,0.2)",
-                            strokeColor: "rgba(220,220,220,1)",
+                            fillColor: "rgba(0, 173, 29, 1)",
+                            strokeColor: "rgba(0, 173, 29, 1)",
                             pointColor: "rgba(220,220,220,1)",
-                            pointStrokeColor: "#fff",
-                            pointHighlightFill: "#fff",
-                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            pointStrokeColor: "orange",
+                            pointHighlightFill: "orange",
+                            pointHighlightStroke: "rgba(255,126,5,1)",
                             data: [2304, 1522, 6174]
                         },
                         {
@@ -106,8 +133,7 @@
 
                     var cvGrub = $("#canvasGrub").get(0).getContext("2d");
 
-                    var mychartGrub = new Chart(cvGrub).Line(dataGrub, {
-                        bezierCurve: false
+                    var mychartGrub = new Chart(cvGrub).Bar(dataGrub, {
                     });
 
                     //dataSpecies

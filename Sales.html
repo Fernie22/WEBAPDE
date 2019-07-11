@@ -79,7 +79,10 @@
             .content-table tbody tr:last-of-type{
                 border-bottom:2px solid #009879;
             }
-        </style>/
+            h4{
+                align-self:left;
+            }
+        </style>
 </head>
 <body>
     <ul>
@@ -98,10 +101,9 @@
                 <option value="100">100</option>
             </select>
         </div>
-        <table id="mytable" class="content-table">
+        <table id="mytable" class="table content-table table-bordered table-striped">
             <thead>
                 <tr>
-                  <th>Sales #</th>
                   <th>Date and Time</th>
                   <th>Burger</th>
                   <th>Species</th>
@@ -116,22 +118,21 @@
     </div>
     
     <script>
+        let record
         $(document).ready(function(){
-            
-            $.ajax({
-                url:"krustykrab_array.json",
-                dataType:"json",
-                type:"get",
-                cache:"false",
-                success:function(krustykrabarray){
-                    $(krustykrabarray.sales).each(function(index, value){
-                        var record = "<tbody><tr><td><a href='SalesDetails.html'>"+(index+1)+
-                        "</a></td><td>"+value.datetime+"</td><td>"+
-                        value.burger+"</td><td>"+value.species+"</td></tr></tbody>";
-                        $("table").append(record);
-                    });
-                }
-            });
+	$.getJSON("http://localhost:3000/sales", function(data){
+		var mytable = '';
+		$.each(data, function(key, value){
+			mytable += " <tr> ";	
+			mytable += " <td> "+value.datetime+" </td> ";
+			mytable += " <td> "+value.burger+" </td>";
+			mytable += " <td> "+value.species+" </td>";
+			mytable += " </tr> ";
+		});
+		$('#mytable').append(mytable);
+	});
+	 let height = $("#mytable")[0].scrollHeight
+      $("#mytable").stop().animate({scrollTop:height}, 100) 
 
             var table ="#mytable"
             $("#maxRows").on("change", function(){
@@ -151,7 +152,7 @@
                 if(totalRows > maxRows){
                     var pagenum=Math.ceil(totalRows/maxRows)
                     for(var i=1;i<=pagenum;){
-                        $(".pagination").append("<li data-page="+i+'">\<span>'+ i++ +'<span class="sr-only">(current)</span></span>\</li>').show()
+                        $(".pagination").append('<li data-page="'+i+'">\<span>'+ i++ +'<span class="sr-only">(current)</span></span>\</li>').show()
                     }
                 }
                 $(".pagination li:first-child").addClass("active")
@@ -171,6 +172,15 @@
                     })
                 })
             })
+            /*
+            $(function(){
+                $('table tr:eq(0)').prepend('<th>ID</th>')
+                var id = 0
+                $('table tr:gt(0)').each(function(){
+                    id++
+                    $(this).prepend('<td>'+id+'</td>')
+                })
+            }) */
         });
     </script>
 

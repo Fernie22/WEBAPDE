@@ -1,0 +1,115 @@
+<html>
+	<head>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	
+		<style>
+			body{
+      			background-color: rgb(249, 249, 252);
+			}
+			header {
+				justify-content: space-between;
+				padding: 0 15px;
+				height: 60px;
+				min-height: 60px;
+				box-shadow: 0 1px 15px 1px rgba(0, 0, 0, 0.05);
+				background: #fff;
+				
+			}
+			.sub-header{
+				display: flex;
+				align-items: stretch;
+				flex: none;
+				background-color: transparent;
+				padding: 5px 0;
+				margin: 2px 0;
+				background-color:ghostwhite;
+				margin-left:1%; 
+				margin-bottom: 3%;
+			}
+			.container{
+				flex: 1 0 auto;
+				margin-right: 10%;
+			}
+			.row {
+				display: inline-block;
+				margin-right: 5%;
+				margin-left: 1%;
+				border-color: black;
+				padding: 3%;		
+				box-shadow: 0 1px 15px 1px rgba(0, 0, 0, 0.05);
+				background: #fff;
+				min-height: 100px;
+				max-height: 200px;
+				min-width: 100px;
+				overflow: auto;
+			}
+			table, th, td {
+				border: 1px solid black;
+				border-collapse: collapse;
+				padding: 2%;
+			}
+			th {
+			background-color: #4CAF50;
+			color: white;
+			}
+		</style>
+
+	</head>
+
+	<body> 
+		<header>
+		
+		</header>
+		<div class="root">
+			<div class="main">
+				<div class="body">
+					<div class="sub-header">
+					Dashboard
+					</div>
+					<div class="container">
+						<div class="row">
+							<h1>/sales</h1>
+							<table class="table" id="sales_table">
+								<tr>
+									<th> Date and Time</th>
+									<th> Burger </th>
+									<th> Species </th>
+								</tr>
+							</table>
+							
+						</div>
+						<div class="row">
+							<!---//-->
+							
+					</div>
+				
+				</div>
+				
+			</div>
+		
+		</div>
+	
+	
+	</body>
+
+
+</html>
+<script>
+$.ajax({
+                url:"krustykrab_array.json",
+                dataType:"json",
+                type:"get",
+                cache:"false",
+                success:function(krustykrabarray){
+                    $(krustykrabarray.sales).each(function(index, value){
+                        var record = "<tbody><tr><td><a href='SalesDetails.html'>"+(index+1)+
+                        "</a></td><td>"+value.datetime+"</td><td>"+
+                        value.burger+"</td><td>"+value.species+"</td></tr></tbody>";
+                        $("table").append(record);
+                    });
+                }
+            });
+</script>
